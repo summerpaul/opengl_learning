@@ -2,14 +2,16 @@
  * @Author: Xia Yunkai
  * @Date:   2024-05-04 00:53:51
  * @Last Modified by:   Xia Yunkai
- * @Last Modified time: 2024-05-04 01:34:20
+ * @Last Modified time: 2024-05-04 14:42:15
  */
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "basis/defines.h"
 #include "basis/logger.h"
+#include <string>
 using namespace std;
+
 
 int main(int argc, char const *argv[])
 {
@@ -46,6 +48,9 @@ int main(int argc, char const *argv[])
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
     glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(float) * 2, 0);
 
     LOG_INFO("buffer: %d\n", buffer);
 

@@ -30,9 +30,11 @@ include(${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 
 find_package(glfw3 CONFIG REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(glad CONFIG REQUIRED)
 
 include_directories(${VCPKG_INCLUDE_DIRS} src)
 add_subdirectory(src)
+add_subdirectory(Prog)
 
 
 
