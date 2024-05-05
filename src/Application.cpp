@@ -2,7 +2,7 @@
  * @Author: Xia Yunkai
  * @Date:   2024-05-04 00:53:51
  * @Last Modified by:   Xia Yunkai
- * @Last Modified time: 2024-05-05 16:47:37
+ * @Last Modified time: 2024-05-05 17:53:22
  */
 #include <iostream>
 #include <GL/glew.h>
@@ -121,15 +121,26 @@ int main(int argc, char const *argv[])
 
     LOG_INFO("GL_VERSION: %s", glGetString(GL_VERSION));
 
-    float positions[6] = {
+    float positions[] = {
         -0.5f, -0.5f,
-        0.0f, 0.5f,
-        0.5f, -0.5f};
-    // 创建buff
+        0.5f, -0.5f,
+        0.5f, 0.5f,
+        -0.5f, 0.5f};
+
+    unsigned int indices[] = {
+        0, 1, 2,
+        2, 3, 0};
+    // // 创建buff
     unsigned int buffer;
     glGenBuffers(1, &buffer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
+
+    // index buff
+    unsigned int ibo;
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(float) * 2, 0);
@@ -145,7 +156,8 @@ int main(int argc, char const *argv[])
     while (!glfwWindowShouldClose(winfow))
     {
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        // glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         glfwSwapBuffers(winfow);
         glfwPollEvents();
